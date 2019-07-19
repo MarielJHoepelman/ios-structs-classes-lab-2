@@ -7,10 +7,20 @@ Using the Room struct below, write code that demonstrates that it is a value typ
 
 ```swift
 struct Room {
-     let maxOccupancy: Int
-     let length: Double
-     let width: Double
+    var maxOccupancy: Int
+    let length: Double
+    let width: Double
 }
+
+let room1 = Room(maxOccupancy: 2, length: 5.5, width: 10.5)
+var room2 = room1
+room2.maxOccupancy = 3
+print(room1)
+//prints Room(maxOccupancy: 2, length: 5.5, width: 10.5)
+print(room2)
+//Room(maxOccupancy: 3, length: 5.5, width: 10.5)
+
+//initial value of room2 is same as room1. Changes made to properties of room2 do not overide properties of room1 because struct is value type and saves both instances in memory instead of referring to the same value.
 ```
 
 ## Question 2
@@ -22,6 +32,16 @@ class Bike {
     var wheelNumber = 2
     var hasBell = false
 }
+let bicycle = Bike()
+bicycle.hasBell
+bicycle.wheelNumber = 3 //original value was 2 then changed to 3. 
+print(bicycle.wheelNumber)
+
+let bike2 = bicycle
+bike2.hasBell = true
+bike2.wheelNumber = bicycle.wheelNumber
+print(bike2.wheelNumber)
+//prints 3
 ```
 
 ## Question 3
@@ -37,28 +57,129 @@ class Animal {
 }
 ```
 
+```swift
+class Animal {
+    var name: String = ""
+
+    init(name: String) {
+        self.name = name
+    }
+
+    func printDescription() {
+        print("I am an animal named \(name)")
+
+    }
+}
+
+class Bird: Animal {
+    var canFly = true
+
+    init(name: String, canFly: Bool) {
+        self.canFly = canFly
+        super.init(name: name)
+        }
+}
+
+var newBird = Bird(name: "kiki", canFly: true)
+newBird.name
+newBird.canFly
+newBird.printDescription()
+```
+
 b. Override the printDescription method to have the instance of the Bird object print out its name and whether it can fly
+
+```swift
+class Animal {
+    var name: String = ""
+
+    init(name: String) {
+        self.name = name
+    }
+
+    func printDescription() {
+        print("I am an animal named \(name)")
+
+    }
+}
+
+class Bird: Animal {
+    var canFly = true
+
+    init(name: String, canFly: Bool) {
+        self.canFly = canFly
+        super.init(name: name)
+    }
+
+    func flyPrint() -> String {
+        if self.canFly == true {
+            return "I can fly"
+        } else {
+            return "I cannot fly"
+    }
+}
+
+    override func printDescription() {
+        print("I'm \(name) and \(String(describing: flyPrint()))")
+    }
+}
+
+var newBird = Bird(name: "kiki", canFly: true)
+newBird.name
+newBird.canFly
+newBird.printDescription()
+```
 
 
 ## Question 4
 
-```swift
-class Bike {
-  let wheelNumber = 2
-  let wheelWidth = 1.3
-  var hasBell = true
-  func ringBell() {
-    if hasBell {
-      print("Ring!")
-    }
-  }
-}
-```
-
-
 a. Create a `LoudBike` subclass of Bike.  When you call `ringBell` it should ring the bell in all caps.
 
 b. Give `LoudBike` a new method called `ringBell(times:)` that rings the bell a given number of times
+
+```swift
+
+class Bike {
+    let wheelNumber = 2
+    let wheelWidth = 1.3
+    var hasBell = true
+
+    func ringBell() {
+        if hasBell {
+            print("Ring!")
+            }
+        }
+    }
+
+class LoudBike: Bike {
+    var model: String = ""
+
+    init(model: String, wheelNumber: Int, wheelWidth: Double, hasBell: Bool) {
+    self.model = model
+    }
+
+    override func ringBell() {
+        if hasBell {
+            print("RING!")
+        }
+    }
+
+    func bellsound(times: Int) {
+        for _ in 0...times where hasBell == true {
+            ringBell()
+            }
+        }
+}
+
+
+var bike = LoudBike(model: "Mountain Bike", wheelNumber: 2, wheelWidth: 1.3, hasBell: true)
+
+bike.model
+bike.ringBell()
+bike.wheelNumber
+bike.wheelWidth
+bike.hasBell
+bike.bellsound(times: 5)
+```
 
 
 ## Question 5
