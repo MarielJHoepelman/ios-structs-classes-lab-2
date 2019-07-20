@@ -215,6 +215,34 @@ for shape in myShapes {
 }
 ```
 
+
+```swift
+//IN PROGRESS, NOT FINISHED 
+class Shape {
+    var name: String { return "This is a generic shape" }
+    var area: Double { fatalError("Subclasses must override the area") }
+    var perimeter: Double { fatalError("Subclasses must override the perimeter") }
+
+    }
+
+class Square: Shape {
+    var sideLength = 5.0
+
+    init(name: String, area: Double, perimeter: Double, sideLength: Double) {
+    self.sideLength = sideLength
+    }
+
+    override var area: Double {
+        get {
+            return sideLength * sideLength
+            }
+        }
+}
+
+var square1 = Square(name: "square", area: 25.0, perimeter: 20.0, sideLength: 5.0)
+print(square1.area)
+```
+
 ## Question 6
 
 a. Given the Point object below, complete the `distance` method so that it returns the distance between a given point.
